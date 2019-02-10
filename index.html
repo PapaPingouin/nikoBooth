@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>NikoBooth</title>
+    </head>
+ 
+    <body>
+		<h1>NikoBooth</h1>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://localhost:3000');
+            
+            socket.on('message', function(message) {
+                //alert('Le serveur a un message pour vous : ' + message);
+                
+                
+                setTimeout(function(){
+					document.getElementById('img1').src=message+'1.jpg';
+				}, 1500 );
+				
+                setTimeout(function(){
+					document.getElementById('img2').src=message+'2.jpg';
+                }, 2500 );
+				
+                
+                setTimeout(function(){
+					document.getElementById('img3').src=message+'3.jpg';
+                }, 3500 );
+				
+                
+                
+            })
+            
+            function launch()
+            {
+				 socket.emit('launch', '3');
+			}
+			
+            
+        </script>
+        
+        <button onclick='launch();'>Launch</button>
+        
+        <img id='img1' src='' width='500px;' /> 
+        <img id='img2' src='' width='500px;' />
+        <img id='img3' src='' width='500px;' />
+        
+        
+    </body>
+</html>

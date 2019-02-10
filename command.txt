@@ -1,0 +1,1 @@
+time gphoto2 --capture-image-and-download --frames 3 --interval 1 --filename test-`date +%Y%m%d-%H%M%S`-%n.jpg --no-keep
