@@ -6,7 +6,7 @@ const Gpio = require('onoff').Gpio;
 var button = false;
   
 try {
-	 button = new Gpio(23, 'in', 'rising', {debounceTimeout: 10});
+	 button = new Gpio(21, 'in', 'falling', {debounceTimeout: 100});
 }
 catch(error) {
   console.log( "GPIO NOT FOUND") ;
@@ -71,6 +71,7 @@ function shoot()
 if( button )
 {
 	button.watch((err, value) => {
+	  console.log( "Button click");
 	  if (err) {
 		throw err;
 	  }
