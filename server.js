@@ -4,9 +4,10 @@ const shellExec = require('shell-exec')
 const Gpio = require('onoff').Gpio;
 
 var button = false;
-  
+var led = false;  
 try {
-	 button = new Gpio(21, 'in', 'falling', {debounceTimeout: 100});
+	 button = new Gpio(4, 'in', 'falling', {debounceTimeout: 100});
+	 led = new Gpio( 17,'out');
 }
 catch(error) {
   console.log( "GPIO NOT FOUND") ;
@@ -62,6 +63,8 @@ io.sockets.on('connection', function (socket, pseudo) {
 
 function shoot()
 {
+	if( led )
+		led.writeSync(1);
 	var filename = "pictures/test-"+(new Date().toISOString())+"-";
 	shellExec('gphoto2 --capture-image-and-download --frames 3 --interval 1 --filename '+filename+'%n.jpg --no-keep')
 	sock.emit( 'message', filename );
@@ -85,7 +88,17 @@ console.log( "Server started port 3000");
 console.log( new Date().toISOString() );
 console.log( __dirname );
 
+if( led )
+	led.writeSync(1);
 
 process.on('SIGINT', () => {
   button.unexport();
+  led.unexport();
 });
+
+
+function ledBlink() {
+  led.writeSync( led.readSync() ^ 1 );
+}
+
+setInterval(ledBlink, 500);
