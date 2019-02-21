@@ -13,6 +13,7 @@
             var socket = io.connect('http://localhost:3000');
             
             var fileList = [];
+            var nextPos = [];
             
             var timerDash = false
             
@@ -58,10 +59,15 @@
 				document.getElementById( 'dbimg5' ).style.backgroundImage="url('"+message+"2.jpg')";
 				document.getElementById( 'dbimg6' ).style.backgroundImage="url('"+message+"3.jpg')";
 				
+				nextPos = [ 1,2,3,7,8,9 ];
+				
 			}
             function rotateDash()
             {
 				var pos = rand(1,9);
+				if( nextPos.lenght > 0 ) // si on a une position prédéfinie, on prend celle là, sinon, aléatoire;
+					pos = nextPos.shift();
+					
 				var img = rand(0, fileList.length-1);
 				document.getElementById( 'dbimg'+pos ).style.backgroundImage="url('"+fileList[ img ]+"')";
 			}
