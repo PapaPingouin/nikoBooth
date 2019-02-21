@@ -67,9 +67,6 @@
 				var pos = rand(1,9);
 				if( nextPos.length > 0 ) // si on a une position prédéfinie, on prend celle là, sinon, aléatoire;
 					pos = nextPos.shift();
-				
-				console.log( pos );
-				console.log( nextPos );
 					
 				var img = rand(0, fileList.length-1);
 				document.getElementById( 'dbimg'+pos ).style.backgroundImage="url('"+fileList[ img ]+"')";
