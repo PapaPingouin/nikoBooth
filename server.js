@@ -19,7 +19,7 @@ var sock = null;
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(function(req, res) {
-	if( req.url.match( 'picture' ) )
+	if( !req.url.match( 'index.html' )  )
 	{
 		console.log( req.url );
 		//fs.readFile( '.'+req.url );
