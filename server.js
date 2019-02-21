@@ -71,6 +71,11 @@ function shoot()
 	
 }
 
+function countdown()
+{
+	sock.emit( 'countdown', '' );
+}
+
 if( button )
 {
 	button.watch((err, value) => {
@@ -79,7 +84,8 @@ if( button )
 		throw err;
 	  }
 	 
-	  shoot();
+	  //shoot();
+	  countdown();
 	});
 }
 

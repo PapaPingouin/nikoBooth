@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html  style='height:100%; width: 100%; padding: 0; margin: 0;'>
     <head>
         <meta charset="utf-8" />
         <title>NikoBooth</title>
     </head>
  
-    <body>
-		<h1>NikoBooth</h1>
+    <body style='height:100%; width: 100%; padding: 0; margin: 0; position: relative; background: #ddd;'>
+		
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
@@ -17,25 +17,53 @@
                 
                 
                 setTimeout(function(){
-					document.getElementById('img1').src=message+'1.jpg';
+					//document.getElementById('img1').src=message+'1.jpg';
+					document.getElementById('img1').style.backgroundImage="url('"+message+"1.jpg')";
 				}, 1500 );
 				
                 setTimeout(function(){
-					document.getElementById('img2').src=message+'2.jpg';
+					//document.getElementById('img2').src=message+'2.jpg';
+					document.getElementById('img2').style.backgroundImage="url('"+message+"2.jpg')";
                 }, 2500 );
 				
                 
                 setTimeout(function(){
-					document.getElementById('img3').src=message+'3.jpg';
+					//document.getElementById('img3').src=message+'3.jpg';
+					document.getElementById('img3').style.backgroundImage="url('"+message+"3.jpg')";
                 }, 3500 );
 				
                 
                 
             })
             
-            function launch()
+            socket.on('countdown', function( message ){
+				launch(3);
+			});
+            
+            function launch( countDown )
             {
-				 socket.emit('launch', '3');
+				//console.log( countDown );
+				
+				document.getElementById('img1').style.backgroundImage='';
+				document.getElementById('img2').style.backgroundImage='';
+				document.getElementById('img3').style.backgroundImage='';
+				console.log( document.getElementById('back') );
+				if( countDown > 0 )
+				{
+					console.log( countDown+'.png' );
+				
+					document.getElementById('back').style.backgroundImage="url('"+countDown+".png')";
+					
+					setTimeout( function(){ launch( countDown-1);  } , 1000);
+					
+				
+				}
+				else
+				{
+					document.getElementById('back').style.backgroundImage="";
+					if( socket )
+						socket.emit('launch', '3');
+				}
 			}
 			
 			function anim()
@@ -52,13 +80,18 @@
 			}
         </style>
         
-        <button onclick='launch();'>Launch</button>
+         <button onclick='anim();'>Anim</button>
+        <button onclick='launch(3);'>Launch</button>
+        <div id='back' style='height: 90%; width: 100%; position: absolute; background: url("3.png") no-repeat center; background-size: contain;'  ></div>
         
-        <img id='img1' src='' width='500px;' /> 
-        <img id='img2' src='' width='500px;' />
-        <img id='img3' src='' width='500px;' />
+        <div id='img1' style='height: 90%; width: 100%; position: absolute; background: url("fake.jpg") no-repeat 0 0; background-size: contain;'  ></div>
+        <div id='img2' style='height: 90%; width: 100%; position: absolute; background: url("fake.jpg") no-repeat center; background-size: contain;'  ></div>
+        <div id='img3' style='height: 90%; width: 100%; position: absolute; background: url("fake.jpg") no-repeat 100% 0; background-size: contain;'  ></div>
         
-        <button onclick='anim();'>Anim</button>
-        <div id='cnt3'>3</div>
+        <!-- <img id='img1' src='fake.jpg' style='height: 90%; width: 1000px; position: absolute; margin:auto auto;' /> 
+        <img id='img2' src='fake.jpg' style='height: 90%; width: 1000px; position: absolute; margin:0 auto;' />
+        <img id='img3' src='fake.jpg' style='height: 90%; width: 1000px; position: absolute; margin:0 auto;' /> -->
+        
+       
     </body>
 </html>
