@@ -104,7 +104,9 @@
 				
 					document.getElementById('back').style.backgroundImage="url('"+countDown+".png')";
 					
-					setTimeout( function(){ launch( countDown-1);  } , 1000);
+					setTimeout( function(){ launch( countDown-1);  } , 
+						(countdown > 1 ? 1000 : 500 ) // cas de la dernière valeur, plus court, pour compenser le temps de déclenchement
+							);
 					
 				
 				}
